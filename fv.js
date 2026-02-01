@@ -2,6 +2,11 @@
 
         const calculateFV = () => {
             const resultDiv = document.getElementById("result");
+            const error_message = document.getElementById("error_message");
+            
+            // Reset error message every click
+             error_message.textContent = "";
+
 
             // TOGGLE LOGIC
             // If it's already showing, hide it and stop.
@@ -14,6 +19,29 @@
             const investment = parseFloat(document.getElementById("investment").value);
             const rate = parseFloat(document.getElementById("rate").value);
             const years = parseInt(document.getElementById("years").value);
+        
+            // -------------------------
+           // VALIDATION SECTION
+         // -------------------------
+
+             if (isNaN(investment) || isNaN(rate) || isNaN(years)) {
+             error_message.textContent = "Please enter valid numbers for all fields.";
+             return;
+            }
+
+             if (investment <= 0 || rate <= 0 || years <= 0) {
+             error_message.textContent = "Please enter positive values for all fields.";
+             return;
+            }
+
+            // Check that interest rate is realistic
+            if (rate > 100) {
+            error_message.textContent = "Interest rate must be 100 or less.";
+             document.getElementById("rate").focus();
+            return;
+            }
+
+
 
             // CALCULATION
             let futureValue = investment;
